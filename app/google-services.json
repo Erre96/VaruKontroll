@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "28614183635",
+    "firebase_url": "https://varukontroll.firebaseio.com",
+    "project_id": "varukontroll",
+    "storage_bucket": "varukontroll.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:28614183635:android:e4a5114015986f0c",
+        "android_client_info": {
+          "package_name": "com.example.erhan.varukontroll"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "28614183635-cgiq3c9jjv31rkn68ovhs7tdhla8bltk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.erhan.varukontroll",
+            "certificate_hash": "69099f270bf21f5a6cb84363c60fdbaae8254677"
+          }
+        },
+        {
+          "client_id": "28614183635-208mkstmqmjb2poclunp5p9fvh399vr1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAkCL3Q-ti1pxCZDyWQIuA1IfNz75uOgI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "28614183635-208mkstmqmjb2poclunp5p9fvh399vr1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
