@@ -1,5 +1,7 @@
 package com.example.erhan.varukontroll;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -89,7 +91,9 @@ public class EmailPasswordActivity extends AppCompatActivity {
                             Log.d("Log in attempt", "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                            // updateUI(user);
+                            goToStock();
                         } else {
+                            goToStock();
                             // If sign in fails, display a message to the user.
                             Log.w("Log in attempt", "signInWithEmail:failure", task.getException());
                             Toast.makeText(EmailPasswordActivity.this, "Authentication failed.",
@@ -129,7 +133,7 @@ public class EmailPasswordActivity extends AppCompatActivity {
         String email = emailText.getText().toString();
         String password = passwordText.getText().toString();
 
-        signIn(email,password);
+        signIn(email, password);
     }
 
     public void createAccount() {
@@ -153,5 +157,10 @@ public class EmailPasswordActivity extends AppCompatActivity {
         {
             createAccount();
         }
+    }
+
+    public void goToStock() {
+        Intent intent = new Intent(this, StockActivity.class);
+        startActivity(intent);
     }
 }

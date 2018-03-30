@@ -9,7 +9,6 @@ public class User {
     private String email;
     private String password;
     private String uid;
-    public Stock stock = new Stock();
 
     public void setEmail(String email)
     {

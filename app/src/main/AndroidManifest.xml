@@ -22,6 +22,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".EmailPasswordActivity" />
+        <activity android:name=".StockActivity" />
     </application>
 
 </manifest>
