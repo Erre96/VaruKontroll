@@ -26,7 +26,7 @@ public class Stock {
         meats[8] = new Product("Hamburgare 45g",5);
         meats[9] = new Product("Halloumiburgare ",5);
         meats[10] = new Product("Köttbullar ",5);
-        meats[11] = new Product("Chiken bits ",5);
+        meats[11] = new Product("Chicken bits ",5);
         meats[12] = new Product("Fish & chips",5);
         meats[13] = new Product("Greenburger ",5);
         meats[14] = new Product("Kebab",5);

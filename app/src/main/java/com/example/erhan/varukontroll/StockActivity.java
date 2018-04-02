@@ -1,12 +1,17 @@
 package com.example.erhan.varukontroll;
 
 import android.content.ClipData;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.app.Activity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+
+
+import java.util.ArrayList;
+import java.util.List;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -14,8 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StockActivity extends AppCompatActivity {
-    public Product meat = new Product("hamburger",2);
+public class StockActivity extends Activity {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -34,9 +38,10 @@ public class StockActivity extends AppCompatActivity {
         // use a linear layout manager
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
+
         List<String> input = new ArrayList<>();
-        for (int i = 0; i < 100; i++) {
-            input.add("Test" + i);
+        for (int i = 0; i < MainActivity.stock.meats.length; i++) {
+            input.add(MainActivity.stock.meats[i].getName()+"   x "+MainActivity.stock.meats[i].getQuantity());
         }// define an adapter
         mAdapter = new MyAdapter(input);
         recyclerView.setAdapter(mAdapter);

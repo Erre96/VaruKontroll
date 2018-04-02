@@ -7,21 +7,24 @@ package com.example.erhan.varukontroll;
 import java.util.List;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     private List<String> values;
+    public TextView txtHeader;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
     public class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        public TextView txtHeader;
+
         public TextView txtFooter;
         public View layout;
 
@@ -64,19 +67,26 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
+    public void onBindViewHolder(ViewHolder holder, final int i) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        final String name = values.get(position);
-        holder.txtHeader.setText(name);
-        holder.txtHeader.setOnClickListener(new OnClickListener() {
+        final String name = values.get(i);
+        Log.d("veryimportant ",name);
+        final AdapterView.OnItemClickListener listener;
+        txtHeader.setText(name);
+        holder.txtFooter.setText("");
+
+
+
+        holder.layout.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                remove(position);
+                //remove(i);
+                MainActivity.stock.meats[i].addOne();
+                String newValue = MainActivity.stock.meats[i].toString();
+                txtHeader.setText("horungi");
             }
         });
-
-        holder.txtFooter.setText("Footer: " + name);
     }
 
     // Return the size of your dataset (invoked by the layout manager)

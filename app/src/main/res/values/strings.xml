@@ -19,4 +19,6 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="add">Lägg till</string>
+    <string name="remove">Ta bort</string>
 </resources>
