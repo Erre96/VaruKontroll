@@ -4,18 +4,19 @@ package com.example.erhan.varukontroll;
  * Created by Erhan on 2018-03-30.
  */
 
-import java.util.List;
-
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-//import android.widget.AdapterView;
 import android.widget.TextView;
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
+import java.util.List;
+
+public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
     private List<String> values;
 
     // Provide a reference to the views for each data item
@@ -23,6 +24,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     // you provide access to all the views for a data item in a view holder
     public class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
+        Context con;
         public TextView txtHeader;
         public TextView txtFooter;
         public View layout;
@@ -32,6 +34,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             layout = v;
             txtHeader = (TextView) v.findViewById(R.id.firstLine);
             txtFooter = (TextView) v.findViewById(R.id.secondLine);
+            this.con = v.getContext();
+
         }
     }
 
@@ -46,14 +50,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public MyAdapter(List<String> myDataset) {
+    public CategoryAdapter(List<String> myDataset) {
         values = myDataset;
     }
 
     // Create new views (invoked by the layout manager)
     @Override
-    public MyAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                   int viewType) {
+    public CategoryAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
+                                                         int viewType) {
         // create a new view
         LayoutInflater inflater = LayoutInflater.from(
                 parent.getContext());
@@ -75,16 +79,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         holder.txtHeader.setText(name);
         holder.txtFooter.setText("");
 
-
-
         holder.layout.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity.stock.meats[i].decreaseOne();
-                String newValue = MainActivity.stock.meats[i].getName() + "   x " + MainActivity.stock.meats[i].getQuantity();
-                Log.d("newvalue", newValue);
-                values.set(i, newValue);
-                onBindViewHolder(holder, i);
+                StockActivity.openCategory = name;
+                Intent intent = new Intent (v.getContext(), StockActivity.class);
+                holder.con.startActivity(intent);
             }
         });
     }

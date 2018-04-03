@@ -43,4 +43,14 @@ public class Product {
     {
         this.quantity++;
     }
+
+    public void addX(int quantity)
+    {
+        this.quantity += quantity;
+    }
+
+    public void decreaseOne()
+    {
+        this.quantity--;
+    }
 }

@@ -160,7 +160,7 @@ public class EmailPasswordActivity extends AppCompatActivity {
     }
 
     public void goToStock() {
-        Intent intent = new Intent(this, StockActivity.class);
+        Intent intent = new Intent(this, ProductTypeActivity.class);
         startActivity(intent);
     }
 }

@@ -21,4 +21,11 @@
     </string>
     <string name="add">Lägg till</string>
     <string name="remove">Ta bort</string>
+    <string name="meat">Kött</string>
+    <string name="sausage">Korv</string>
+    <string name="ost">Ost</string>
+    <string name="sauces">Såser / Dressing</string>
+    <string name="bread">Bröd</string>
+    <string name="spices">Kryddor</string>
+    <string name="ingredients">Ingredienser</string>
 </resources>

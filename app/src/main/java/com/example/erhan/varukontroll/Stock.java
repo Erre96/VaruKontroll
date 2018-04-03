@@ -9,6 +9,7 @@ public class Stock {
     Product[] sausages = new Product[5];
     Product[] cheeses = new Product[5];
     Product[] sauces = new Product[14];
+    Product[] spices = new Product[15];
     Product[] breads = new Product[9];
     Product[] ingredients = new Product[35];
     Product[] packings = new Product[2];
@@ -59,6 +60,22 @@ public class Stock {
         sauces[11] = new Product("Stark senap ",5);
         sauces[12] = new Product("Curryketchup ",5);
         sauces[13] = new Product("French hotdog dressing",5);
+
+        spices[0] = new Product("Salt",2);
+        spices[1] = new Product("Peppar",2);
+        spices[2] = new Product("Socker",2);
+        spices[3] = new Product("Piffikrydda",2);
+        spices[4] = new Product("Cajunpeppar",2);
+        spices[5] = new Product("Oregano",2);
+        spices[6] = new Product("Persilja",2);
+        spices[7] = new Product("Basilika ",2);
+        spices[8] = new Product("Citronkrydda ",2);
+        spices[9] = new Product("Grillkrydda",2);
+        spices[10] = new Product("Vitpeppar",2);
+        spices[11] = new Product("Vitlökssalt",2);
+        spices[12] = new Product("Aromkrydda ",2);
+        spices[13] = new Product("Kryddpeppar  ",2);
+        spices[14] = new Product("Dill ",2);
 
         breads[0] = new Product("Vetemjöl",5);
         breads[1] = new Product("Tunnbröd glutenfri",5);
