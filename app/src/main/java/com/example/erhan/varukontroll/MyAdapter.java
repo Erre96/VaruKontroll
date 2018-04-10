@@ -6,6 +6,8 @@ package com.example.erhan.varukontroll;
 
 import java.util.List;
 
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,25 +15,35 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 //import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     private List<String> values;
+    private List<String> quantity;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
     public class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
+        public RelativeLayout rel;
         public TextView txtHeader;
         public TextView txtFooter;
+        public Button actionButton;
+        public EditText inputX;
         public View layout;
 
         public ViewHolder(View v) {
             super(v);
             layout = v;
-            txtHeader = (TextView) v.findViewById(R.id.firstLine);
-            txtFooter = (TextView) v.findViewById(R.id.secondLine);
+            txtHeader = v.findViewById(R.id.firstLine);
+            txtFooter = v.findViewById(R.id.secondLine);
+            rel = v.findViewById(R.id.rel);
+            actionButton = v.findViewById(R.id.actionButton);
+            inputX = v.findViewById(R.id.inputX);
         }
     }
 
@@ -46,8 +58,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public MyAdapter(List<String> myDataset) {
+    public MyAdapter(List<String> myDataset, List<String> q) {
         values = myDataset;
+        quantity = q;
     }
 
     // Create new views (invoked by the layout manager)
@@ -70,24 +83,105 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         final String name = values.get(i);
+        final String num = quantity.get(i);
         //Log.d("nameValue ",values.get(i)+"   "+i);
 
         holder.txtHeader.setText(name);
-        holder.txtFooter.setText("");
+        holder.txtFooter.setText(num);
+
+        //sets color
+        int x = Integer.parseInt(quantity.get(i).toString());
+
+        if(x < -5)
+        {
+            //holder.rel.setBackgroundColor(0xffff0000);
+            holder.rel.setBackgroundColor(Color.rgb(220,0,0));
+        }
+
+        if(x > -5)
+        {
+            //holder.rel.setBackgroundColor(Color.rgb(0,0,220));
+            holder.rel.setBackgroundColor(0xff0000ff);
+        }
 
 
 
-        holder.layout.setOnClickListener(new OnClickListener() {
+        holder.actionButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity.stock.meats[i].decreaseOne();
-                String newValue = MainActivity.stock.meats[i].getName() + "   x " + MainActivity.stock.meats[i].getQuantity();
-                Log.d("newvalue", newValue);
-                values.set(i, newValue);
+                //Log.d("asshole",holder.inputX.gette);
+                String number = "";
+                if(holder.inputX.getText().toString().equals(""))
+                {
+                    number = refreshStock(i,1);
+                    holder.inputX.setText("");
+                }
+
+               else
+                {
+                    int x = Integer.parseInt(holder.inputX.getText().toString());
+                    number = refreshStock(i,x);
+                    holder.inputX.setText("");
+                }
+
+
+                //refreshes text info
+                Log.d("newvalue", number);
+                quantity.set(i, number);
                 onBindViewHolder(holder, i);
             }
         });
     }
+
+    public String refreshStock(int i, int x)
+    {
+        String number = "";
+
+        switch (StockActivity.openCategory){
+            case "Kött":
+                MainActivity.stock.meats[i].decreaseX(x);
+                number = Integer.toString(MainActivity.stock.meats[i].getQuantity());
+                break;
+
+            case "Korv":
+                MainActivity.stock.sausages[i].decreaseX(x);
+                number = Integer.toString(MainActivity.stock.sausages[i].getQuantity());
+                break;
+
+            case "Ost":
+                MainActivity.stock.cheeses[i].decreaseX(x);
+                number = Integer.toString(MainActivity.stock.cheeses[i].getQuantity());
+                break;
+
+            case "Såser / Dressing":
+                MainActivity.stock.sauces[i].decreaseX(x);
+                number = Integer.toString(MainActivity.stock.sauces[i].getQuantity());
+                break;
+
+            case "Kryddor":
+                MainActivity.stock.spices[i].decreaseX(x);
+                number = Integer.toString(MainActivity.stock.spices[i].getQuantity());
+                break;
+
+            case "Bröd":
+                MainActivity.stock.breads[i].decreaseX(x);
+                number = Integer.toString(MainActivity.stock.breads[i].getQuantity());
+                break;
+
+            case "Ingredienser":
+                MainActivity.stock.ingredients[i].decreaseX(x);
+                number = Integer.toString(MainActivity.stock.ingredients[i].getQuantity());
+                break;
+
+            case "Förpackningar":
+                MainActivity.stock.packings[i].decreaseX(x);
+                number = Integer.toString(MainActivity.stock.packings[i].getQuantity());
+                break;
+        }
+        StockActivity.refreshMeatListFirebase();
+        return number;
+    }
+
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override

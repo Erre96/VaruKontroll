@@ -53,4 +53,10 @@ public class Product {
     {
         this.quantity--;
     }
+
+    public void decreaseX(int x)
+    {
+
+        this.quantity-=x;
+    }
 }

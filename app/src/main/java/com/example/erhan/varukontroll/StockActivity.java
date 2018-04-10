@@ -87,30 +87,39 @@ public class StockActivity extends Activity {
     void createMeatList()
     {
         List<String> input = new ArrayList<>();
+        List<String> q = new ArrayList<>();
         for (int i = 0; i < MainActivity.stock.meats.length; i++) {
-            input.add(MainActivity.stock.meats[i].getName()+"   x "+MainActivity.stock.meats[i].getQuantity());
+            input.add(MainActivity.stock.meats[i].getName());
+            q.add(Integer.toString(MainActivity.stock.meats[i].getQuantity()));
+
         }// define an adapter
-        mAdapter = new MyAdapter(input);
+        mAdapter = new MyAdapter(input,q);
         recyclerView.setAdapter(mAdapter);
     }
 
     void createSausageList()
     {
         List<String> input = new ArrayList<>();
+        List<String> q = new ArrayList<>();
         for (int i = 0; i < MainActivity.stock.sausages.length; i++) {
-            input.add(MainActivity.stock.sausages[i].getName()+"   x "+MainActivity.stock.sausages[i].getQuantity());
+            input.add(MainActivity.stock.sausages[i].getName());
+            q.add(Integer.toString(MainActivity.stock.sausages[i].getQuantity()));
+
         }// define an adapter
-        mAdapter = new MyAdapter(input);
+        mAdapter = new MyAdapter(input,q);
         recyclerView.setAdapter(mAdapter);
     }
 
     void createCheeseList()
     {
         List<String> input = new ArrayList<>();
+        List<String> q = new ArrayList<>();
         for (int i = 0; i < MainActivity.stock.cheeses.length; i++) {
-            input.add(MainActivity.stock.cheeses[i].getName()+"   x "+MainActivity.stock.cheeses[i].getQuantity());
+            input.add(MainActivity.stock.cheeses[i].getName());
+            q.add(Integer.toString(MainActivity.stock.cheeses[i].getQuantity()));
+
         }// define an adapter
-        mAdapter = new MyAdapter(input);
+        mAdapter = new MyAdapter(input,q);
         recyclerView.setAdapter(mAdapter);
     }
 
@@ -118,61 +127,77 @@ public class StockActivity extends Activity {
     void createSauceList()
     {
         List<String> input = new ArrayList<>();
+        List<String> q = new ArrayList<>();
         for (int i = 0; i < MainActivity.stock.sauces.length; i++) {
-            input.add(MainActivity.stock.sauces[i].getName()+"   x "+MainActivity.stock.sauces[i].getQuantity());
+            input.add(MainActivity.stock.sauces[i].getName());
+            q.add(Integer.toString(MainActivity.stock.sauces[i].getQuantity()));
+
         }// define an adapter
-        mAdapter = new MyAdapter(input);
+        mAdapter = new MyAdapter(input,q);
         recyclerView.setAdapter(mAdapter);
     }
 
     void createSpiceList()
     {
         List<String> input = new ArrayList<>();
+        List<String> q = new ArrayList<>();
         for (int i = 0; i < MainActivity.stock.spices.length; i++) {
-            input.add(MainActivity.stock.spices[i].getName()+"   x "+MainActivity.stock.spices[i].getQuantity());
+            input.add(MainActivity.stock.spices[i].getName());
+            q.add(Integer.toString(MainActivity.stock.spices[i].getQuantity()));
+
         }// define an adapter
-        mAdapter = new MyAdapter(input);
+        mAdapter = new MyAdapter(input,q);
         recyclerView.setAdapter(mAdapter);
     }
 
     void createBreadList()
     {
         List<String> input = new ArrayList<>();
+        List<String> q = new ArrayList<>();
         for (int i = 0; i < MainActivity.stock.breads.length; i++) {
-            input.add(MainActivity.stock.breads[i].getName()+"   x "+MainActivity.stock.breads[i].getQuantity());
+            input.add(MainActivity.stock.breads[i].getName());
+            q.add(Integer.toString(MainActivity.stock.breads[i].getQuantity()));
+
         }// define an adapter
-        mAdapter = new MyAdapter(input);
+        mAdapter = new MyAdapter(input,q);
         recyclerView.setAdapter(mAdapter);
     }
 
     void createIngredientsList()
     {
         List<String> input = new ArrayList<>();
+        List<String> q = new ArrayList<>();
         for (int i = 0; i < MainActivity.stock.ingredients.length; i++) {
-            input.add(MainActivity.stock.ingredients[i].getName()+"   x "+MainActivity.stock.ingredients[i].getQuantity());
+            input.add(MainActivity.stock.ingredients[i].getName());
+            q.add(Integer.toString(MainActivity.stock.ingredients[i].getQuantity()));
+
         }// define an adapter
-        mAdapter = new MyAdapter(input);
+        mAdapter = new MyAdapter(input,q);
         recyclerView.setAdapter(mAdapter);
     }
 
     void createPackingsList()
     {
         List<String> input = new ArrayList<>();
+        List<String> q = new ArrayList<>();
         for (int i = 0; i < MainActivity.stock.packings.length; i++) {
-            input.add(MainActivity.stock.packings[i].getName()+"   x "+MainActivity.stock.packings[i].getQuantity());
+            input.add(MainActivity.stock.packings[i].getName());
+            q.add(Integer.toString(MainActivity.stock.packings[i].getQuantity()));
+
         }// define an adapter
-        mAdapter = new MyAdapter(input);
+        mAdapter = new MyAdapter(input,q);
         recyclerView.setAdapter(mAdapter);
     }
 
 
-    public void Add(View v) {
-        MainActivity.stock.meats[6].addOne();
+    public static void refreshMeatListFirebase() {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("Stock");
         DatabaseReference myRef2 = myRef.child("Meat");
-        DatabaseReference myRef3 = myRef2.child(MainActivity.stock.meats[6].getName());
-        myRef3.child("Quantity").setValue(MainActivity.stock.meats[6].getQuantity());
-        myRef3.child("Varning").setValue(MainActivity.stock.meats[6].getVarningValue());
+        for(int i = 0; i < MainActivity.stock.meats.length; i++) {
+            DatabaseReference myRef3 = myRef2.child(MainActivity.stock.meats[i].getName());
+            myRef3.child("Quantity").setValue(MainActivity.stock.meats[i].getQuantity());
+            myRef3.child("Varning").setValue(MainActivity.stock.meats[i].getVarningValue());
+        }
     }
 }
