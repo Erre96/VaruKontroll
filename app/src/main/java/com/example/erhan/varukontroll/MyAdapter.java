@@ -23,6 +23,7 @@ import android.widget.TextView;
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     private List<String> values;
     private List<String> quantity;
+    private String actionText;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -58,9 +59,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public MyAdapter(List<String> myDataset, List<String> q) {
+    public MyAdapter(List<String> myDataset, List<String> q, String act) {
         values = myDataset;
         quantity = q;
+        actionText = act;
     }
 
     // Create new views (invoked by the layout manager)
@@ -88,19 +90,20 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
         holder.txtHeader.setText(name);
         holder.txtFooter.setText(num);
+        holder.actionButton.setText(actionText);
 
         //sets color
         int x = Integer.parseInt(quantity.get(i).toString());
 
         if(x < -5)
         {
-            //holder.rel.setBackgroundColor(0xffff0000);
-            holder.rel.setBackgroundColor(Color.rgb(220,0,0));
+            holder.rel.setBackgroundColor(0xffff0000);
+            //holder.rel.setBackgroundColor(Color.rgb(100,0,0));
         }
 
         if(x > -5)
         {
-            //holder.rel.setBackgroundColor(Color.rgb(0,0,220));
+            //holder.rel.setBackgroundColor(Color.rgb(0,0,100));
             holder.rel.setBackgroundColor(0xff0000ff);
         }
 
@@ -113,17 +116,25 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                 String number = "";
                 if(holder.inputX.getText().toString().equals(""))
                 {
-                    number = refreshStock(i,1);
-                    holder.inputX.setText("");
+                    if(StockActivity.action == "Öka")
+                    {
+                        number = increaseStock(i,1);
+                    }
+                    else
+                    number = decreaseStock(i,1);
                 }
-
                else
                 {
                     int x = Integer.parseInt(holder.inputX.getText().toString());
-                    number = refreshStock(i,x);
-                    holder.inputX.setText("");
+                    if(StockActivity.action == "Öka")
+                    {
+                        increaseStock(i,x);
+                    }
+                    else
+                        number = decreaseStock(i,x);
                 }
 
+                holder.inputX.setText("");
 
                 //refreshes text info
                 Log.d("newvalue", number);
@@ -133,7 +144,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         });
     }
 
-    public String refreshStock(int i, int x)
+    public String decreaseStock(int i, int x)
     {
         String number = "";
 
@@ -175,6 +186,55 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
             case "Förpackningar":
                 MainActivity.stock.packings[i].decreaseX(x);
+                number = Integer.toString(MainActivity.stock.packings[i].getQuantity());
+                break;
+        }
+        StockActivity.refreshMeatListFirebase();
+        return number;
+    }
+
+    public String increaseStock(int i, int x)
+    {
+        String number = "";
+
+        switch (StockActivity.openCategory){
+            case "Kött":
+                MainActivity.stock.meats[i].increaseX(x);
+                number = Integer.toString(MainActivity.stock.meats[i].getQuantity());
+                break;
+
+            case "Korv":
+                MainActivity.stock.sausages[i].increaseX(x);
+                number = Integer.toString(MainActivity.stock.sausages[i].getQuantity());
+                break;
+
+            case "Ost":
+                MainActivity.stock.cheeses[i].increaseX(x);
+                number = Integer.toString(MainActivity.stock.cheeses[i].getQuantity());
+                break;
+
+            case "Såser / Dressing":
+                MainActivity.stock.sauces[i].increaseX(x);
+                number = Integer.toString(MainActivity.stock.sauces[i].getQuantity());
+                break;
+
+            case "Kryddor":
+                MainActivity.stock.spices[i].increaseX(x);
+                number = Integer.toString(MainActivity.stock.spices[i].getQuantity());
+                break;
+
+            case "Bröd":
+                MainActivity.stock.breads[i].increaseX(x);
+                number = Integer.toString(MainActivity.stock.breads[i].getQuantity());
+                break;
+
+            case "Ingredienser":
+                MainActivity.stock.ingredients[i].increaseX(x);
+                number = Integer.toString(MainActivity.stock.ingredients[i].getQuantity());
+                break;
+
+            case "Förpackningar":
+                MainActivity.stock.packings[i].increaseX(x);
                 number = Integer.toString(MainActivity.stock.packings[i].getQuantity());
                 break;
         }
