@@ -59,4 +59,10 @@ public class Product {
 
         this.quantity-=x;
     }
+
+    public void increaseX(int x)
+    {
+
+        this.quantity+=x;
+    }
 }

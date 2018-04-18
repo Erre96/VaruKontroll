@@ -1,6 +1,9 @@
 package com.example.erhan.varukontroll;
 
 import android.content.ClipData;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -26,12 +30,13 @@ public class StockActivity extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
     public static String openCategory;
+    public static String action; //Increase or Decrease
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stock);
-
+        setStartUp();
         recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         // use this setting to
         // improve performance if you know that changes
@@ -41,16 +46,13 @@ public class StockActivity extends AppCompatActivity {
         // use a linear layout manager
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        getListCategory(openCategory);
-
+        getListCategory();
 
 
     }
 
-    void getListCategory(String o)
-    {
-        o = openCategory;
-        switch (o){
+    void getListCategory() {
+        switch (openCategory) {
             case "Kött":
                 createMeatList();
                 break;
@@ -85,21 +87,20 @@ public class StockActivity extends AppCompatActivity {
         }
     }
 
-    void createMeatList()
-    {
+    void createMeatList() {
         List<String> input = new ArrayList<>();
         List<String> q = new ArrayList<>();
+
         for (int i = 0; i < MainActivity.stock.meats.length; i++) {
             input.add(MainActivity.stock.meats[i].getName());
             q.add(Integer.toString(MainActivity.stock.meats[i].getQuantity()));
 
         }// define an adapter
-        mAdapter = new MyAdapter(input,q);
+        mAdapter = new MyAdapter(input, q, action);
         recyclerView.setAdapter(mAdapter);
     }
 
-    void createSausageList()
-    {
+    void createSausageList() {
         List<String> input = new ArrayList<>();
         List<String> q = new ArrayList<>();
         for (int i = 0; i < MainActivity.stock.sausages.length; i++) {
@@ -107,12 +108,11 @@ public class StockActivity extends AppCompatActivity {
             q.add(Integer.toString(MainActivity.stock.sausages[i].getQuantity()));
 
         }// define an adapter
-        mAdapter = new MyAdapter(input,q);
+        mAdapter = new MyAdapter(input, q, action);
         recyclerView.setAdapter(mAdapter);
     }
 
-    void createCheeseList()
-    {
+    void createCheeseList() {
         List<String> input = new ArrayList<>();
         List<String> q = new ArrayList<>();
         for (int i = 0; i < MainActivity.stock.cheeses.length; i++) {
@@ -120,13 +120,12 @@ public class StockActivity extends AppCompatActivity {
             q.add(Integer.toString(MainActivity.stock.cheeses[i].getQuantity()));
 
         }// define an adapter
-        mAdapter = new MyAdapter(input,q);
+        mAdapter = new MyAdapter(input, q, action);
         recyclerView.setAdapter(mAdapter);
     }
 
 
-    void createSauceList()
-    {
+    void createSauceList() {
         List<String> input = new ArrayList<>();
         List<String> q = new ArrayList<>();
         for (int i = 0; i < MainActivity.stock.sauces.length; i++) {
@@ -134,12 +133,11 @@ public class StockActivity extends AppCompatActivity {
             q.add(Integer.toString(MainActivity.stock.sauces[i].getQuantity()));
 
         }// define an adapter
-        mAdapter = new MyAdapter(input,q);
+        mAdapter = new MyAdapter(input, q, action);
         recyclerView.setAdapter(mAdapter);
     }
 
-    void createSpiceList()
-    {
+    void createSpiceList() {
         List<String> input = new ArrayList<>();
         List<String> q = new ArrayList<>();
         for (int i = 0; i < MainActivity.stock.spices.length; i++) {
@@ -147,12 +145,11 @@ public class StockActivity extends AppCompatActivity {
             q.add(Integer.toString(MainActivity.stock.spices[i].getQuantity()));
 
         }// define an adapter
-        mAdapter = new MyAdapter(input,q);
+        mAdapter = new MyAdapter(input, q, action);
         recyclerView.setAdapter(mAdapter);
     }
 
-    void createBreadList()
-    {
+    void createBreadList() {
         List<String> input = new ArrayList<>();
         List<String> q = new ArrayList<>();
         for (int i = 0; i < MainActivity.stock.breads.length; i++) {
@@ -160,12 +157,11 @@ public class StockActivity extends AppCompatActivity {
             q.add(Integer.toString(MainActivity.stock.breads[i].getQuantity()));
 
         }// define an adapter
-        mAdapter = new MyAdapter(input,q);
+        mAdapter = new MyAdapter(input, q, action);
         recyclerView.setAdapter(mAdapter);
     }
 
-    void createIngredientsList()
-    {
+    void createIngredientsList() {
         List<String> input = new ArrayList<>();
         List<String> q = new ArrayList<>();
         for (int i = 0; i < MainActivity.stock.ingredients.length; i++) {
@@ -173,12 +169,11 @@ public class StockActivity extends AppCompatActivity {
             q.add(Integer.toString(MainActivity.stock.ingredients[i].getQuantity()));
 
         }// define an adapter
-        mAdapter = new MyAdapter(input,q);
+        mAdapter = new MyAdapter(input, q, action);
         recyclerView.setAdapter(mAdapter);
     }
 
-    void createPackingsList()
-    {
+    void createPackingsList() {
         List<String> input = new ArrayList<>();
         List<String> q = new ArrayList<>();
         for (int i = 0; i < MainActivity.stock.packings.length; i++) {
@@ -186,7 +181,7 @@ public class StockActivity extends AppCompatActivity {
             q.add(Integer.toString(MainActivity.stock.packings[i].getQuantity()));
 
         }// define an adapter
-        mAdapter = new MyAdapter(input,q);
+        mAdapter = new MyAdapter(input, q, action);
         recyclerView.setAdapter(mAdapter);
     }
 
@@ -195,10 +190,68 @@ public class StockActivity extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("Stock");
         DatabaseReference myRef2 = myRef.child("Meat");
-        for(int i = 0; i < MainActivity.stock.meats.length; i++) {
+        for (int i = 0; i < MainActivity.stock.meats.length; i++) {
             DatabaseReference myRef3 = myRef2.child(MainActivity.stock.meats[i].getName());
             myRef3.child("Quantity").setValue(MainActivity.stock.meats[i].getQuantity());
             myRef3.child("Varning").setValue(MainActivity.stock.meats[i].getVarningValue());
         }
+    }
+
+    public static void refreshSausageList() {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("Stock");
+        DatabaseReference myRef2 = myRef.child("Korv");
+        for (int i = 0; i < MainActivity.stock.sausages.length; i++) {
+            DatabaseReference myRef3 = myRef2.child(MainActivity.stock.sausages[i].getName());
+            myRef3.child("Quantity").setValue(MainActivity.stock.sausages[i].getQuantity());
+            myRef3.child("Varning").setValue(MainActivity.stock.sausages[i].getVarningValue());
+        }
+    }
+
+    public static void refreshCheeseList() {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("Stock");
+        DatabaseReference myRef2 = myRef.child("Ost");
+        for (int i = 0; i < MainActivity.stock.cheeses.length; i++) {
+            DatabaseReference myRef3 = myRef2.child(MainActivity.stock.cheeses[i].getName());
+            myRef3.child("Quantity").setValue(MainActivity.stock.cheeses[i].getQuantity());
+            myRef3.child("Varning").setValue(MainActivity.stock.cheeses[i].getVarningValue());
+        }
+    }
+
+    public void setIncrease(View v) {
+
+        Button incButton = findViewById(R.id.increaseButton);
+        Button decButton = findViewById(R.id.decreaseButton);
+
+        incButton.setTextColor(Color.WHITE);
+        decButton.setTextColor(Color.BLACK);
+        action = "Öka";
+        getListCategory();
+    }
+
+
+    public void setDecrease(View v) {
+
+        Button incButton = findViewById(R.id.increaseButton);
+        Button decButton = findViewById(R.id.decreaseButton);
+
+        incButton.setTextColor(Color.BLACK);
+        decButton.setTextColor(Color.WHITE);
+
+        action = "Minska";
+        getListCategory();
+    }
+
+    public void setStartUp()
+    {
+        Button incButton = findViewById(R.id.increaseButton);
+        Button decButton = findViewById(R.id.decreaseButton);
+
+        incButton.setTextColor(Color.BLACK);
+        decButton.setTextColor(Color.WHITE);
+
+        action = "Minska";
+
     }
 }
