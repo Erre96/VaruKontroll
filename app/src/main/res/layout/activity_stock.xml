@@ -13,25 +13,30 @@
         android:layout_width="fill_parent"
         android:layout_alignParentTop="true">
 
-        <Button
-            android:id="@+id/increaseButton"
+        <android.support.design.widget.TabLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@android:color/holo_green_dark"
-            android:onClick="setIncrease"
-            android:text="@string/add"></Button>
+            android:background="@color/colorPrimary">
 
-        <Button
-            android:id="@+id/decreaseButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/increaseButton"
-            android:layout_weight="1"
-            android:background="@android:color/holo_red_dark"
-            android:onClick="setDecrease"
-            android:text="@string/decrease"></Button>
+            <android.support.design.widget.TabItem
+                android:id="@+id/increaseButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/add" />
+
+            <android.support.design.widget.TabItem
+                android:id="@+id/decreaseButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/remove" />
+
+            <android.support.design.widget.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bäst säljande" />
+        </android.support.design.widget.TabLayout>
+
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView

@@ -9,79 +9,84 @@
     <!-- A RecyclerView with some commonly used attributes -->
 
 
-    <Button
-        android:id="@+id/breadPic"
-        android:layout_width="147dp"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/meatPic"
-        android:layout_below="@+id/meatPic"
-        android:layout_marginTop="28dp"
-        android:background="@android:color/transparent"
-        android:drawablePadding="5dp"
-        android:drawableTop="@drawable/bread"
-        android:onClick="openBreadCategory"
-        android:text="@string/bread"
-        android:textColor="@color/cardview_light_background" />
+    <GridView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
 
-    <Button
-        android:id="@+id/meatPic"
-        android:layout_width="147dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="148dp"
-        android:layout_marginTop="51dp"
-        android:background="@android:color/transparent"
-        android:drawablePadding="5dp"
-        android:drawableTop="@drawable/grilled_meats"
-        android:onClick="openMeatCategory"
-        android:text="@string/meat"
-        android:textColor="@color/cardview_light_background" />
+        <Button
+            android:id="@+id/breadPic"
+            android:layout_width="147dp"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/meatPic"
+            android:layout_below="@+id/meatPic"
+            android:layout_marginTop="28dp"
+            android:background="@android:color/transparent"
+            android:drawablePadding="5dp"
+            android:drawableTop="@drawable/bread"
+            android:onClick="openBreadCategory"
+            android:text="@string/bread"
+            android:textColor="@color/cardview_light_background" />
 
-    <Button
-        android:id="@+id/sausagePic"
-        android:layout_width="147dp"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/meatPic"
-        android:layout_alignBottom="@+id/meatPic"
-        android:layout_marginStart="20dp"
-        android:layout_toEndOf="@+id/meatPic"
-        android:background="@android:color/transparent"
-        android:drawablePadding="5dp"
-        android:drawableTop="@drawable/korv"
-        android:onClick="openSausageCategory"
-        android:text="@string/sausage"
-        android:textColor="@color/cardview_light_background" />
+        <Button
+            android:id="@+id/meatPic"
+            android:layout_width="147dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="148dp"
+            android:layout_marginTop="51dp"
+            android:background="@android:color/transparent"
+            android:drawablePadding="5dp"
+            android:drawableTop="@drawable/grilled_meats"
+            android:onClick="openMeatCategory"
+            android:text="@string/meat"
+            android:textColor="@color/cardview_light_background" />
 
-    <Button
-        android:id="@+id/cheesePic"
-        android:layout_width="147dp"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/sausagePic"
-        android:layout_alignBottom="@+id/sausagePic"
-        android:layout_marginStart="21dp"
-        android:layout_toEndOf="@+id/sausagePic"
-        android:background="@android:color/transparent"
-        android:drawablePadding="5dp"
-        android:drawableTop="@drawable/cheese"
-        android:onClick="openCheeseCategory"
-        android:text="@string/cheese"
-        android:textColor="@color/cardview_light_background" />
+        <Button
+            android:id="@+id/saucePic"
+            android:layout_width="147dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/cheesePic"
+            android:layout_alignBottom="@+id/cheesePic"
+            android:layout_marginStart="21dp"
+            android:layout_toEndOf="@+id/cheesePic"
+            android:background="@android:color/transparent"
+            android:drawablePadding="5dp"
+            android:drawableTop="@drawable/sauces"
+            android:onClick="openSauceCategory"
+            android:text="@string/sauces"
+            android:textColor="@color/cardview_light_background" />
 
-    <Button
-        android:id="@+id/saucePic"
-        android:layout_width="147dp"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/cheesePic"
-        android:layout_alignBottom="@+id/cheesePic"
-        android:layout_marginStart="21dp"
-        android:layout_toEndOf="@+id/cheesePic"
-        android:background="@android:color/transparent"
-        android:drawablePadding="5dp"
-        android:drawableTop="@drawable/sauces"
-        android:onClick="openSauceCategory"
-        android:text="@string/sauces"
-        android:textColor="@color/cardview_light_background" />
+        <Button
+            android:id="@+id/sausagePic"
+            android:layout_width="147dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/meatPic"
+            android:layout_alignBottom="@+id/meatPic"
+            android:layout_marginStart="20dp"
+            android:layout_toEndOf="@+id/meatPic"
+            android:background="@android:color/transparent"
+            android:drawablePadding="5dp"
+            android:drawableTop="@drawable/korv"
+            android:onClick="openSausageCategory"
+            android:text="@string/sausage"
+            android:textColor="@color/cardview_light_background" />
+
+        <Button
+            android:id="@+id/cheesePic"
+            android:layout_width="147dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/sausagePic"
+            android:layout_alignBottom="@+id/sausagePic"
+            android:layout_marginStart="21dp"
+            android:layout_toEndOf="@+id/sausagePic"
+            android:background="@android:color/transparent"
+            android:drawablePadding="5dp"
+            android:drawableTop="@drawable/cheese"
+            android:onClick="openCheeseCategory"
+            android:text="@string/cheese"
+            android:textColor="@color/cardview_light_background" />
+    </GridView>
 
 
 </RelativeLayout>
