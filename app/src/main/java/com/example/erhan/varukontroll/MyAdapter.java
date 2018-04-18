@@ -95,13 +95,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         //sets color
         int x = Integer.parseInt(quantity.get(i).toString());
 
-        if(x < -5)
+        if(x <= -2)
         {
             holder.rel.setBackgroundColor(0xffff0000);
             //holder.rel.setBackgroundColor(Color.rgb(100,0,0));
         }
 
-        if(x > -5)
+        if(x >= -1)
         {
             //holder.rel.setBackgroundColor(Color.rgb(0,0,100));
             holder.rel.setBackgroundColor(0xff0000ff);
@@ -128,7 +128,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                     int x = Integer.parseInt(holder.inputX.getText().toString());
                     if(StockActivity.action == "Öka")
                     {
-                        increaseStock(i,x);
+                        number = increaseStock(i,x);
                     }
                     else
                         number = decreaseStock(i,x);

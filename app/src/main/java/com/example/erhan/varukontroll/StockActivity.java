@@ -196,6 +196,28 @@ public class StockActivity extends Activity {
         }
     }
 
+    public static void refreshSausageList() {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("Stock");
+        DatabaseReference myRef2 = myRef.child("Korv");
+        for (int i = 0; i < MainActivity.stock.sausages.length; i++) {
+            DatabaseReference myRef3 = myRef2.child(MainActivity.stock.sausages[i].getName());
+            myRef3.child("Quantity").setValue(MainActivity.stock.sausages[i].getQuantity());
+            myRef3.child("Varning").setValue(MainActivity.stock.sausages[i].getVarningValue());
+        }
+    }
+
+    public static void refreshCheeseList() {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("Stock");
+        DatabaseReference myRef2 = myRef.child("Ost");
+        for (int i = 0; i < MainActivity.stock.cheeses.length; i++) {
+            DatabaseReference myRef3 = myRef2.child(MainActivity.stock.cheeses[i].getName());
+            myRef3.child("Quantity").setValue(MainActivity.stock.cheeses[i].getQuantity());
+            myRef3.child("Varning").setValue(MainActivity.stock.cheeses[i].getVarningValue());
+        }
+    }
+
     public void setIncrease(View v) {
 
         Button incButton = findViewById(R.id.increaseButton);
