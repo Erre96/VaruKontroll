@@ -1,5 +1,17 @@
 package com.example.erhan.varukontroll;
 
+import android.util.Log;
+
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Erhan on 2018-03-23.
  */
@@ -128,5 +140,42 @@ public class Stock {
 
 
 
+    }
+
+
+
+    public void getFirebaseData() {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference mRef = database.getReference();
+        //DatabaseReference mRef = database.getReference("Stock").child(StockActivity.openCategory).child("Quantity");
+        Log.d("fff",StockActivity.openCategory+mRef);
+
+        mRef.child("Stock").child(StockActivity.openCategory).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                //MainActivity.stock = dataSnapshot.getValue(Stock.class);
+                int a = Integer.valueOf(dataSnapshot.getValue().toString());
+                Log.d("yyy","yessur");
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 }

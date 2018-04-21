@@ -21,7 +21,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".EmailPasswordActivity" />
         <activity android:name=".StockActivity" />
         <activity android:name=".productTypeActivity" />
         <activity android:name=".ProductTypeActivity"></activity>

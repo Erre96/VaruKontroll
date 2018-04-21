@@ -2,32 +2,33 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
-    android:layout_height="?android:attr/listPreferredItemHeight"
+    android:layout_height="90dp"
     android:padding="6dip" >
 
     <android.support.v7.widget.CardView
+        android:id="@+id/cardView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/cardView">
+        android:layout_height="75dp">
+
 
         <RelativeLayout
             android:id="@+id/rel"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="?attr/colorPrimaryDark">
+            android:background="#1565C0">
 
             <TextView
                 android:id="@+id/firstLine"
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_above="@id/secondLine"
                 android:layout_alignParentTop="true"
                 android:layout_alignWithParentIfMissing="true"
-                android:layout_toRightOf="@id/icon"
+                android:layout_marginStart="12dp"
+                android:layout_toEndOf="@+id/icon"
                 android:gravity="center_vertical"
                 android:text="Example application"
                 android:textColor="@android:color/background_light"
-                android:textSize="16sp" />
+                android:textSize="20sp" />
 
             <ImageView
                 android:id="@+id/icon"
@@ -42,38 +43,35 @@
 
             <TextView
                 android:id="@+id/secondLine"
-                android:layout_width="fill_parent"
-                android:layout_height="26dip"
-                android:layout_alignParentBottom="true"
-                android:layout_toEndOf="@+id/icon"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:text="Description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/inputX"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="70dp"
+                android:text="TextView"
                 android:textColor="@android:color/background_light"
                 android:textSize="20sp" />
+                android:inputType="number" />
+
+            <Button
+                android:id="@+id/actionButton"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignStart="@+id/firstLine"
+                android:text="Button"
+                android:textSize="12sp" />
 
             <EditText
                 android:id="@+id/inputX"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginEnd="15dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignStart="@+id/secondLine"
                 android:ems="10"
                 android:hint="Värde"
-                android:inputType="phone"
+                android:inputType="textPersonName"
                 android:textColor="@android:color/background_light" />
-
-            <Button
-                android:id="@+id/actionButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="38dp"
-                android:layout_toStartOf="@+id/inputX"
-                android:text="@string/decrease"
-                android:textColor="@android:color/background_light"
-                android:textSize="14sp" />
 
         </RelativeLayout>
 

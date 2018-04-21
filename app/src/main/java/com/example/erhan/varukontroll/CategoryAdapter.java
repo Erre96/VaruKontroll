@@ -26,14 +26,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         // each data item is just a string in this case
         Context con;
         public TextView txtHeader;
-        public TextView txtFooter;
         public View layout;
 
         public ViewHolder(View v) {
             super(v);
             layout = v;
             txtHeader = (TextView) v.findViewById(R.id.firstLine);
-            txtFooter = (TextView) v.findViewById(R.id.secondLine);
             this.con = v.getContext();
 
         }
@@ -62,7 +60,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         LayoutInflater inflater = LayoutInflater.from(
                 parent.getContext());
         View v =
-                inflater.inflate(R.layout.row_layout, parent, false);
+                inflater.inflate(R.layout.row_layout_category, parent, false);
         // set the view's size, margins, paddings and layout parameters
         ViewHolder vh = new ViewHolder(v);
         return vh;
@@ -77,11 +75,11 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         //Log.d("nameValue ",values.get(i)+"   "+i);
 
         holder.txtHeader.setText(name);
-        holder.txtFooter.setText("");
 
         holder.layout.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("asshole","you fail");
                 StockActivity.openCategory = name;
                 Intent intent = new Intent (v.getContext(), StockActivity.class);
                 holder.con.startActivity(intent);

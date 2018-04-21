@@ -4,9 +4,9 @@ package com.example.erhan.varukontroll;
  * Created by Erhan on 2018-03-30.
  */
 
+import java.util.ArrayList;
 import java.util.List;
 
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -19,6 +19,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     private List<String> values;
@@ -95,16 +102,18 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         //sets color
         int x = Integer.parseInt(quantity.get(i).toString());
 
-        if(x <= -2)
+        if(x >= 2)
         {
-            holder.rel.setBackgroundColor(0xffff0000);
+            holder.rel.setBackgroundColor(Color.parseColor("#1565C0"));
+            //holder.rel.setBackgroundColor(0xffff0000);
             //holder.rel.setBackgroundColor(Color.rgb(100,0,0));
         }
 
-        if(x >= -1)
+        if(x <= 1)
         {
+            holder.rel.setBackgroundColor(Color.parseColor("#C62828"));
             //holder.rel.setBackgroundColor(Color.rgb(0,0,100));
-            holder.rel.setBackgroundColor(0xff0000ff);
+            //holder.rel.setBackgroundColor(0xff0000ff);
         }
 
 
@@ -118,20 +127,22 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                 {
                     if(StockActivity.action == "Öka")
                     {
-                        number = increaseStock(i,1);
+                        number = increaseValue (holder.txtHeader.getText().toString(),holder.txtFooter.getText().toString(),1);
                     }
                     else
-                    number = decreaseStock(i,1);
+                    //number = decreaseStock(i,1, holder.txtHeader.getText().toString());
+                       number = decreaseValue(holder.txtHeader.getText().toString(), holder.txtFooter.getText().toString(),1);
                 }
                else
                 {
                     int x = Integer.parseInt(holder.inputX.getText().toString());
                     if(StockActivity.action == "Öka")
                     {
-                        number = increaseStock(i,x);
+                        number = increaseValue (holder.txtHeader.getText().toString(),holder.txtFooter.getText().toString(),x);
                     }
                     else
-                        number = decreaseStock(i,x);
+                        //number = decreaseStock(i,x,holder.txtHeader.getText().toString());
+                        number = decreaseValue(holder.txtHeader.getText().toString(), holder.txtFooter.getText().toString(),x);
                 }
 
                 holder.inputX.setText("");
@@ -144,104 +155,39 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         });
     }
 
-    public String decreaseStock(int i, int x)
+    public String decreaseValue(String name, String value, int shrinkValue)
     {
-        String number = "";
+        int curValue = Integer.parseInt(value);
+        int sumValue = curValue - shrinkValue;
 
-        switch (StockActivity.openCategory){
-            case "Kött":
-                MainActivity.stock.meats[i].decreaseX(x);
-                number = Integer.toString(MainActivity.stock.meats[i].getQuantity());
-                break;
-
-            case "Korv":
-                MainActivity.stock.sausages[i].decreaseX(x);
-                number = Integer.toString(MainActivity.stock.sausages[i].getQuantity());
-                break;
-
-            case "Ost":
-                MainActivity.stock.cheeses[i].decreaseX(x);
-                number = Integer.toString(MainActivity.stock.cheeses[i].getQuantity());
-                break;
-
-            case "Såser / Dressing":
-                MainActivity.stock.sauces[i].decreaseX(x);
-                number = Integer.toString(MainActivity.stock.sauces[i].getQuantity());
-                break;
-
-            case "Kryddor":
-                MainActivity.stock.spices[i].decreaseX(x);
-                number = Integer.toString(MainActivity.stock.spices[i].getQuantity());
-                break;
-
-            case "Bröd":
-                MainActivity.stock.breads[i].decreaseX(x);
-                number = Integer.toString(MainActivity.stock.breads[i].getQuantity());
-                break;
-
-            case "Ingredienser":
-                MainActivity.stock.ingredients[i].decreaseX(x);
-                number = Integer.toString(MainActivity.stock.ingredients[i].getQuantity());
-                break;
-
-            case "Förpackningar":
-                MainActivity.stock.packings[i].decreaseX(x);
-                number = Integer.toString(MainActivity.stock.packings[i].getQuantity());
-                break;
+        if(sumValue < 0)
+        {
+            sumValue = 0;
         }
-        StockActivity.refreshMeatListFirebase();
-        return number;
+
+        String retValue = Integer.toString(sumValue);
+        StockActivity.refreshFirebaseData(name,retValue);
+        Log.d("CurValue",value);
+        Log.d("retValue",retValue);
+        return retValue;
     }
 
-    public String increaseStock(int i, int x)
+    public String increaseValue(String name, String value, int raiseValue)
     {
-        String number = "";
+        int curValue = Integer.parseInt(value);
+        int sumValue = curValue + raiseValue;
 
-        switch (StockActivity.openCategory){
-            case "Kött":
-                MainActivity.stock.meats[i].increaseX(x);
-                number = Integer.toString(MainActivity.stock.meats[i].getQuantity());
-                break;
-
-            case "Korv":
-                MainActivity.stock.sausages[i].increaseX(x);
-                number = Integer.toString(MainActivity.stock.sausages[i].getQuantity());
-                break;
-
-            case "Ost":
-                MainActivity.stock.cheeses[i].increaseX(x);
-                number = Integer.toString(MainActivity.stock.cheeses[i].getQuantity());
-                break;
-
-            case "Såser / Dressing":
-                MainActivity.stock.sauces[i].increaseX(x);
-                number = Integer.toString(MainActivity.stock.sauces[i].getQuantity());
-                break;
-
-            case "Kryddor":
-                MainActivity.stock.spices[i].increaseX(x);
-                number = Integer.toString(MainActivity.stock.spices[i].getQuantity());
-                break;
-
-            case "Bröd":
-                MainActivity.stock.breads[i].increaseX(x);
-                number = Integer.toString(MainActivity.stock.breads[i].getQuantity());
-                break;
-
-            case "Ingredienser":
-                MainActivity.stock.ingredients[i].increaseX(x);
-                number = Integer.toString(MainActivity.stock.ingredients[i].getQuantity());
-                break;
-
-            case "Förpackningar":
-                MainActivity.stock.packings[i].increaseX(x);
-                number = Integer.toString(MainActivity.stock.packings[i].getQuantity());
-                break;
+        if(sumValue > 100)
+        {
+            sumValue = 100;
         }
-        StockActivity.refreshMeatListFirebase();
-        return number;
-    }
 
+        String retValue = Integer.toString(sumValue);
+        StockActivity.refreshFirebaseData(name,retValue);
+        Log.d("CurValue",value);
+        Log.d("retValue",retValue);
+        return retValue;
+    }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override

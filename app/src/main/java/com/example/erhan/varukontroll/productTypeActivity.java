@@ -10,7 +10,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
+
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import org.w3c.dom.Comment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,12 +55,15 @@ public class ProductTypeActivity extends AppCompatActivity {
         recyclerView.setAdapter(mAdapter);
     }
 
-    void setCategories()
-    {
-        categories[0] = "Kött";        categories[4] = "Bröd";
-        categories[1] = "Korv";        categories[5] = "Kryddor";
-        categories[2] = "Ost";        categories[6] = "Ingredienser";
-        categories[3] = "Såser / Dressing"; categories[7] = "Förpackningar";
+    void setCategories() {
+        categories[0] = "Kött";
+        categories[4] = "Bröd";
+        categories[1] = "Korv";
+        categories[5] = "Kryddor";
+        categories[2] = "Ost";
+        categories[6] = "Ingredienser";
+        categories[3] = "Såser / Dressing";
+        categories[7] = "Förpackningar";
 
     }
 }
