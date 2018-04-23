@@ -28,18 +28,7 @@
                 android:gravity="center_vertical"
                 android:text="Example application"
                 android:textColor="@android:color/background_light"
-                android:textSize="20sp" />
-
-            <ImageView
-                android:id="@+id/icon"
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginRight="6dip"
-                android:background="@android:color/holo_orange_dark"
-                android:contentDescription="TODO"
-                android:src="@mipmap/ic_launcher" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/secondLine"
@@ -47,10 +36,10 @@
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/inputX"
                 android:layout_alignParentEnd="true"
-                android:layout_marginEnd="70dp"
+                android:layout_marginEnd="30dp"
                 android:text="TextView"
                 android:textColor="@android:color/background_light"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
                 android:inputType="number" />
 
             <Button
@@ -66,12 +55,14 @@
                 android:id="@+id/inputX"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignStart="@+id/secondLine"
-                android:ems="10"
-                android:hint="Värde"
-                android:inputType="textPersonName"
-                android:textColor="@android:color/background_light" />
+                android:layout_alignParentEnd="true"
+                android:layout_alignTop="@+id/actionButton"
+                android:layout_marginEnd="10dp"
+                android:ems="2"
+                android:hint="XXX"
+                android:inputType="number"
+                android:textColor="@android:color/background_light"
+                android:textColorLink="@android:color/holo_orange_light" />
 
         </RelativeLayout>
 

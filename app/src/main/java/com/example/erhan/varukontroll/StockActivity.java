@@ -212,7 +212,7 @@ public class StockActivity extends AppCompatActivity {
         DatabaseReference cheeseRef = database.getReference("Stock").child("Ost");
         DatabaseReference sauceRef = database.getReference("Stock").child("Såser");
         DatabaseReference breadRef = database.getReference("Stock").child("Bröd");
-        DatabaseReference spiceRef = database.getReference("Stock").child("Krydda");
+        DatabaseReference spiceRef = database.getReference("Stock").child("Kryddor");
         DatabaseReference ingredientsRef = database.getReference("Stock").child("Ingredienser");
         DatabaseReference packingsRef = database.getReference("Stock").child("Förpackningar");
 

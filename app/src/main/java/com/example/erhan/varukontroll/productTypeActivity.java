@@ -62,7 +62,7 @@ public class ProductTypeActivity extends AppCompatActivity {
         categories[5] = "Kryddor";
         categories[2] = "Ost";
         categories[6] = "Ingredienser";
-        categories[3] = "Såser / Dressing";
+        categories[3] = "Såser";
         categories[7] = "Förpackningar";
 
     }
