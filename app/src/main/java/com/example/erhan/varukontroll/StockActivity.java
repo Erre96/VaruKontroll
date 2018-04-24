@@ -7,10 +7,12 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.app.Activity;
 import android.support.annotation.MainThread;
-import android.support.design.widget.TabItem;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -21,7 +23,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,20 +33,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StockActivity extends AppCompatActivity {
+
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
     public static String openCategory;
     public static String action; //Increase or Decrease
 
+    Toolbar toolbar;
+    TabLayout tabLayout;
+    ViewPager viewPager;
+    ViewPagerAdapter viewPagerAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stock);
+
+        toolbar = findViewById(R.id.toolBar);
+        setSupportActionBar(toolbar);
+
+        tabLayout = findViewById(R.id.tabLayout);
+        viewPager = findViewById(R.id.viewPager);
+        viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+        viewPagerAdapter.addFragments(new AddProductFragment(),"Öka");
+        viewPagerAdapter.addFragments(new RemoveProductFragment(),"Minska");
+        viewPager.setAdapter(viewPagerAdapter);
+        tabLayout.setupWithViewPager(viewPager);
+
         getFirebaseData();
         String a = Integer.toString(MainActivity.stock.meats[0].getQuantity());
-        Log.d("motherfucker",a);
-        setStartUp();
+        Log.d("Quantity",a);
+        //setStartUp();
         recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         // use this setting to
         // improve performance if you know that changes
@@ -55,8 +74,7 @@ public class StockActivity extends AppCompatActivity {
         // use a linear layout manager
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        //getListCategory();
-        Log.d("motherfucker",a);
+
     }
 
     void getListCategory() {
@@ -289,7 +307,7 @@ public class StockActivity extends AppCompatActivity {
             locRef2.setValue(MainActivity.stock.packings[i].getName());
         }
     }
-
+/*
     public void setIncrease(View v) {
 
         TabItem incButton = findViewById(R.id.increaseButton);
@@ -323,7 +341,7 @@ public class StockActivity extends AppCompatActivity {
         //decButton.setTextColor(Color.WHITE);
 
         action = "Minska";
-    }
+    }*/
 
     public void getFirebaseData()
     {

@@ -1,53 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/ic_launcher_background">
+    tools:context="com.example.erhan.varukontroll.StockActivity">
 
-    <!-- A RecyclerView with some commonly used attributes -->
-
-    <LinearLayout
-        android:id="@+id/LinearLayout02"
-        android:layout_width="fill_parent"
+    <android.support.design.widget.AppBarLayout
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true">
+        android:layout_width="match_parent">
+        <include
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            layout="@layout/toolbar_layout"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            />
 
         <android.support.design.widget.TabLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@color/colorPrimary">
-
-            <android.support.design.widget.TabItem
-                android:id="@+id/increaseButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/add" />
-
-            <android.support.design.widget.TabItem
-                android:id="@+id/decreaseButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/remove" />
-
-            <android.support.design.widget.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Bäst säljande" />
+            android:layout_height="wrap_content"
+            android:id="@+id/tabLayout"
+            app:tabMode="fixed"
+            app:tabGravity="fill"
+            >
         </android.support.design.widget.TabLayout>
 
-    </LinearLayout>
+    </android.support.design.widget.AppBarLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/my_recycler_view"
+    <android.support.v4.view.ViewPager
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="49dp"
-        android:scrollbars="vertical">
+        android:id="@+id/viewPager"
+        >
+    </android.support.v4.view.ViewPager>
 
-    </android.support.v7.widget.RecyclerView>
 
 </RelativeLayout>
