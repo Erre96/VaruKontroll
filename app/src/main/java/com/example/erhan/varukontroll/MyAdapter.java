@@ -123,10 +123,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             public void onClick(View v) {
                 //Log.d("asshole",holder.inputX.gette);
                 String number = "";
+                Log.d("IMPORTANT",actionText);
                 if(holder.inputX.getText().toString().equals(""))
                 {
-                    if(StockActivity.action == "Öka")
+                    if(actionText == "Öka")
                     {
+                        Log.d("IMPORTANT",actionText);
                         number = increaseValue (holder.txtHeader.getText().toString(),holder.txtFooter.getText().toString(),1);
                     }
                     else
@@ -136,8 +138,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                else
                 {
                     int x = Integer.parseInt(holder.inputX.getText().toString());
-                    if(StockActivity.action == "Öka")
+                    if(actionText == "Öka")
                     {
+                        Log.d("IMPORTANT",actionText);
                         number = increaseValue (holder.txtHeader.getText().toString(),holder.txtFooter.getText().toString(),x);
                     }
                     else

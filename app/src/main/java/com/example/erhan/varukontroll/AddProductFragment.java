@@ -2,14 +2,24 @@ package com.example.erhan.varukontroll;
 
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -17,55 +27,78 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  */
 public class AddProductFragment extends Fragment {
-    String[] strings = {"1", "2", "3", "4", "5", "6", "7"};
+    RecyclerView rv;
+    RecyclerView.Adapter mAdapter;
 
     public AddProductFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        RecyclerView rv = getView().findViewById(R.id.my_recycler_view);
+        return inflater.inflate(R.layout.fragment_add_product, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
+    {
+        rv = view.findViewById(R.id.my_recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity().getBaseContext());
-
         rv.setLayoutManager(linearLayoutManager);
-        rv.setAdapter(new SimpleRVAdapter(strings));
-        return rv;
+        getFirebaseData(view);
     }
 
-    /**
-     * A Simple Adapter for the RecyclerView
-     */
-    public class SimpleRVAdapter extends RecyclerView.Adapter<SimpleViewHolder> {
-        private String[] dataSource;
-        public SimpleRVAdapter(String[] dataArgs){
-            dataSource = dataArgs;
-        }
+    public void getFirebaseData(View view)
+    {
 
-        @Override
-        public SimpleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = new TextView(parent.getContext());
-            SimpleViewHolder viewHolder = new SimpleViewHolder(view);
-            return viewHolder;
-        }
+        List<String> name = new ArrayList<>();
+        List<String> value = new ArrayList<>();
 
-        @Override
-        public void onBindViewHolder(SimpleViewHolder holder, int position) {
-            holder.textView.setText(dataSource[position]);
-        }
 
-        @Override
-        public int getItemCount() {
-            return dataSource.length;
-        }
-    }
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference mRef = database.getReference("Stock").child(StockActivity.openCategory);
+        final DatabaseReference mRefRealTime = database.getReference("Stock").child(StockActivity.openCategory);
 
-    /**
-     * A Simple ViewHolder for the RecyclerView
-     */
-    public static class SimpleViewHolder extends RecyclerView.ViewHolder{
-        public TextView textView;
-        public SimpleViewHolder(View itemView) {
-            super(itemView);
-            textView = (TextView) itemView;
-        }
+        final List<String> stockValues = new ArrayList<>();
+        final List<String> nameValues = new ArrayList<>();
+
+        mRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot stockSnapshot : dataSnapshot.getChildren())
+                {
+                    String name = (stockSnapshot.child("Namn").getValue().toString());
+                    String value = (stockSnapshot.child("Antal").getValue().toString());
+                    stockValues.add(value);
+                    nameValues.add(name);
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        mRefRealTime.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                stockValues.clear();
+                nameValues.clear();
+                for(DataSnapshot stockSnapshot : dataSnapshot.getChildren())
+                {
+                    String name = (stockSnapshot.child("Namn").getValue().toString());
+                    String value = (stockSnapshot.child("Antal").getValue().toString());
+                    stockValues.add(value);
+                    nameValues.add(name);
+                    mAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        mAdapter = new MyAdapter(nameValues, stockValues, "Öka");
+        rv.setAdapter(mAdapter);
     }
 }

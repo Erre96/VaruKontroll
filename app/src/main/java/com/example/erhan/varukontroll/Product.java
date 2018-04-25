@@ -7,6 +7,7 @@ package com.example.erhan.varukontroll;
 public class Product {
     private String name;
     private int quantity;
+    private int totalSales;
     private int varningValue;
 
 
