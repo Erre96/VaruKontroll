@@ -60,7 +60,7 @@ public class StockActivity extends AppCompatActivity {
         viewPagerAdapter.addFragments(new RemoveProductFragment(),"Minska");
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
-
+/*
         getFirebaseData();
         String a = Integer.toString(MainActivity.stock.meats[0].getQuantity());
         Log.d("Quantity",a);
@@ -73,7 +73,7 @@ public class StockActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         // use a linear layout manager
         layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setLayoutManager(layoutManager);*/
 
     }
 
