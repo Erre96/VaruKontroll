@@ -56,8 +56,8 @@ public class StockActivity extends AppCompatActivity {
         tabLayout = findViewById(R.id.tabLayout);
         viewPager = findViewById(R.id.viewPager);
         viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-        viewPagerAdapter.addFragments(new AddProductFragment(),"Öka");
         viewPagerAdapter.addFragments(new RemoveProductFragment(),"Minska");
+        viewPagerAdapter.addFragments(new AddProductFragment(),"Öka");
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
 /*
@@ -77,139 +77,7 @@ public class StockActivity extends AppCompatActivity {
 
     }
 
-    void getListCategory() {
-        switch (openCategory) {
-            case "Kött":
-                createMeatList();
-                break;
 
-            case "Korv":
-                createSausageList();
-                break;
-
-            case "Ost":
-                createCheeseList();
-                break;
-
-            case "Såser / Dressing":
-                createSauceList();
-                break;
-
-            case "Kryddor":
-                createSpiceList();
-                break;
-
-            case "Bröd":
-                createBreadList();
-                break;
-
-            case "Ingredienser":
-                createIngredientsList();
-                break;
-
-            case "Förpackningar":
-                createPackingsList();
-                break;
-        }
-    }
-
-    void createMeatList() {
-        List<String> input = new ArrayList<>();
-        List<String> q = new ArrayList<>();
-
-        for (int i = 0; i < MainActivity.stock.meats.length; i++) {
-            input.add(MainActivity.stock.meats[i].getName());
-            q.add(Integer.toString(MainActivity.stock.meats[i].getQuantity()));
-
-        }// define an adapter
-        mAdapter = new MyAdapter(input, q, action);
-        recyclerView.setAdapter(mAdapter);
-    }
-
-    void createSausageList() {
-        List<String> input = new ArrayList<>();
-        List<String> q = new ArrayList<>();
-        for (int i = 0; i < MainActivity.stock.sausages.length; i++) {
-            input.add(MainActivity.stock.sausages[i].getName());
-            q.add(Integer.toString(MainActivity.stock.sausages[i].getQuantity()));
-
-        }// define an adapter
-        mAdapter = new MyAdapter(input, q, action);
-        recyclerView.setAdapter(mAdapter);
-    }
-
-    void createCheeseList() {
-        List<String> input = new ArrayList<>();
-        List<String> q = new ArrayList<>();
-        for (int i = 0; i < MainActivity.stock.cheeses.length; i++) {
-            input.add(MainActivity.stock.cheeses[i].getName());
-            q.add(Integer.toString(MainActivity.stock.cheeses[i].getQuantity()));
-
-        }// define an adapter
-        mAdapter = new MyAdapter(input, q, action);
-        recyclerView.setAdapter(mAdapter);
-    }
-
-
-    void createSauceList() {
-        List<String> input = new ArrayList<>();
-        List<String> q = new ArrayList<>();
-        for (int i = 0; i < MainActivity.stock.sauces.length; i++) {
-            input.add(MainActivity.stock.sauces[i].getName());
-            q.add(Integer.toString(MainActivity.stock.sauces[i].getQuantity()));
-
-        }// define an adapter
-        mAdapter = new MyAdapter(input, q, action);
-        recyclerView.setAdapter(mAdapter);
-    }
-
-    void createSpiceList() {
-        List<String> input = new ArrayList<>();
-        List<String> q = new ArrayList<>();
-        for (int i = 0; i < MainActivity.stock.spices.length; i++) {
-            input.add(MainActivity.stock.spices[i].getName());
-            q.add(Integer.toString(MainActivity.stock.spices[i].getQuantity()));
-
-        }// define an adapter
-        mAdapter = new MyAdapter(input, q, action);
-        recyclerView.setAdapter(mAdapter);
-    }
-
-    void createBreadList() {
-        List<String> input = new ArrayList<>();
-        List<String> q = new ArrayList<>();
-        for (int i = 0; i < MainActivity.stock.breads.length; i++) {
-            input.add(MainActivity.stock.breads[i].getName());
-            q.add(Integer.toString(MainActivity.stock.breads[i].getQuantity()));
-
-        }// define an adapter
-        mAdapter = new MyAdapter(input, q, action);
-        recyclerView.setAdapter(mAdapter);
-    }
-
-    void createIngredientsList() {
-        List<String> input = new ArrayList<>();
-        List<String> q = new ArrayList<>();
-        for (int i = 0; i < MainActivity.stock.ingredients.length; i++) {
-            input.add(MainActivity.stock.ingredients[i].getName());
-            q.add(Integer.toString(MainActivity.stock.ingredients[i].getQuantity()));
-
-        }// define an adapter
-        mAdapter = new MyAdapter(input, q, action);
-        recyclerView.setAdapter(mAdapter);
-    }
-
-    void createPackingsList() {
-        List<String> input = new ArrayList<>();
-        List<String> q = new ArrayList<>();
-        for (int i = 0; i < MainActivity.stock.packings.length; i++) {
-            input.add(MainActivity.stock.packings[i].getName());
-            q.add(Integer.toString(MainActivity.stock.packings[i].getQuantity()));
-
-        }// define an adapter
-        mAdapter = new MyAdapter(input, q, action);
-        recyclerView.setAdapter(mAdapter);
-    }
 
 
     public static void refreshFirebaseData(String name, String number) {
