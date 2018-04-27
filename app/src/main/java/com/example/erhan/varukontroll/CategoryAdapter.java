@@ -25,13 +25,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         Context con;
-        public TextView txtHeader;
-        public View layout;
+        private TextView txtHeader;
+        private View layout;
 
-        public ViewHolder(View v) {
+        private ViewHolder(View v) {
             super(v);
             layout = v;
-            txtHeader = (TextView) v.findViewById(R.id.firstLine);
+            txtHeader = v.findViewById(R.id.firstLine);
             this.con = v.getContext();
 
         }
@@ -79,10 +79,19 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         holder.layout.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("asshole","you fail");
+                //Categories[8] stands for the low stock category
                 StockActivity.openCategory = name;
-                Intent intent = new Intent (v.getContext(), StockActivity.class);
-                holder.con.startActivity(intent);
+                if(!name.equals(ProductTypeActivity.categories[8]))
+                {
+                    Intent intent = new Intent(v.getContext(), StockActivity.class);
+                    holder.con.startActivity(intent);
+                }
+
+                if(name.equals(ProductTypeActivity.categories[8]))
+                {
+                    Intent intent = new Intent(v.getContext(), LowStockOnlyActivity.class);
+                    holder.con.startActivity(intent);
+                }
             }
         });
     }

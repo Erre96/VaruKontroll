@@ -5,6 +5,7 @@ package com.example.erhan.varukontroll;
  */
 
 public class User {
+    //Might use this class as a "Remember me", to save the info locally, as a automatic log in. I've prioritized other things so far.
     private String name;
     private String email;
     private String password;

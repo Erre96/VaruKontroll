@@ -9,12 +9,14 @@ public class Product {
     private int quantity;
     private int totalSales;
     private int varningValue;
+    private String category;
 
 
-    public Product(String name, int varningValue)
+    public Product(String name, int varningValue, String category)
     {
         this.name = name;
         this.varningValue = varningValue;
+        this.category = category;
     }
 
     public String getName() {
@@ -53,6 +55,11 @@ public class Product {
     public void decreaseOne()
     {
         this.quantity--;
+    }
+
+    public String getCategory()
+    {
+        return category;
     }
 
     public void decreaseX(int x)

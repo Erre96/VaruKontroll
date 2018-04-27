@@ -6,12 +6,9 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -43,41 +40,16 @@ public class RemoveProductFragment extends Fragment {
         rv = view.findViewById(R.id.my_recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity().getBaseContext());
         rv.setLayoutManager(linearLayoutManager);
-        getFirebaseData(view);
+        getFirebaseData();
     }
 
-    public void getFirebaseData(View view)
+    public void getFirebaseData()
     {
-
-        List<String> name = new ArrayList<>();
-        List<String> value = new ArrayList<>();
-
-
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference mRef = database.getReference("Stock").child(StockActivity.openCategory);
         DatabaseReference mRefRealTime = database.getReference("Stock").child(StockActivity.openCategory);
 
         final List<String> stockValues = new ArrayList<>();
         final List<String> nameValues = new ArrayList<>();
-
-        mRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot stockSnapshot : dataSnapshot.getChildren())
-                {
-                    String name = (stockSnapshot.child("Namn").getValue().toString());
-                    String value = (stockSnapshot.child("Antal").getValue().toString());
-                    stockValues.add(value);
-                    nameValues.add(name);
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
 
         mRefRealTime.addValueEventListener(new ValueEventListener() {
             @Override

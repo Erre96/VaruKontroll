@@ -20,13 +20,6 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     private List<String> values;
     private List<String> quantity;
@@ -37,14 +30,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     // you provide access to all the views for a data item in a view holder
     public class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        public RelativeLayout rel;
-        public TextView txtHeader;
-        public TextView txtFooter;
-        public Button actionButton;
-        public EditText inputX;
+        private RelativeLayout rel;
+        private TextView txtHeader;
+        private TextView txtFooter;
+        private Button actionButton;
+        private EditText inputX;
         public View layout;
 
-        public ViewHolder(View v) {
+        private ViewHolder(View v) {
             super(v);
             layout = v;
             txtHeader = v.findViewById(R.id.firstLine);
@@ -66,10 +59,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public MyAdapter(List<String> myDataset, List<String> q, String act) {
+    public MyAdapter(List<String> myDataset, List<String> quantity, String action) {
         values = myDataset;
-        quantity = q;
-        actionText = act;
+        this.quantity = quantity;
+        this.actionText = action;
+
     }
 
     // Create new views (invoked by the layout manager)
@@ -105,15 +99,16 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         if(x >= 2)
         {
             holder.rel.setBackgroundColor(Color.parseColor("#1565C0"));
-            //holder.rel.setBackgroundColor(0xffff0000);
-            //holder.rel.setBackgroundColor(Color.rgb(100,0,0));
         }
 
-        if(x <= 1)
+        if(x == 1)
+        {
+            holder.rel.setBackgroundColor(Color.parseColor("#F9A825"));
+        }
+
+        if(x == 0)
         {
             holder.rel.setBackgroundColor(Color.parseColor("#C62828"));
-            //holder.rel.setBackgroundColor(Color.rgb(0,0,100));
-            //holder.rel.setBackgroundColor(0xff0000ff);
         }
 
 
@@ -121,30 +116,24 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         holder.actionButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Log.d("asshole",holder.inputX.gette);
                 String number = "";
-                Log.d("IMPORTANT",actionText);
                 if(holder.inputX.getText().toString().equals(""))
                 {
-                    if(actionText == "Öka")
+                    if(actionText.equals("Öka"))
                     {
-                        Log.d("IMPORTANT",actionText);
                         number = increaseValue (holder.txtHeader.getText().toString(),holder.txtFooter.getText().toString(),1);
                     }
                     else
-                    //number = decreaseStock(i,1, holder.txtHeader.getText().toString());
                        number = decreaseValue(holder.txtHeader.getText().toString(), holder.txtFooter.getText().toString(),1);
                 }
                else
                 {
                     int x = Integer.parseInt(holder.inputX.getText().toString());
-                    if(actionText == "Öka")
+                    if(actionText.equals("Öka"))
                     {
-                        Log.d("IMPORTANT",actionText);
                         number = increaseValue (holder.txtHeader.getText().toString(),holder.txtFooter.getText().toString(),x);
                     }
                     else
-                        //number = decreaseStock(i,x,holder.txtHeader.getText().toString());
                         number = decreaseValue(holder.txtHeader.getText().toString(), holder.txtFooter.getText().toString(),x);
                 }
 
@@ -170,8 +159,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
         String retValue = Integer.toString(sumValue);
         StockActivity.refreshFirebaseData(name,retValue);
-        Log.d("CurValue",value);
-        Log.d("retValue",retValue);
+        //Log.d("CurValue",value);
+        //Log.d("retValue",retValue);
         return retValue;
     }
 
@@ -187,8 +176,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
         String retValue = Integer.toString(sumValue);
         StockActivity.refreshFirebaseData(name,retValue);
-        Log.d("CurValue",value);
-        Log.d("retValue",retValue);
+        //Log.d("CurValue",value);
+        //Log.d("retValue",retValue);
         return retValue;
     }
 

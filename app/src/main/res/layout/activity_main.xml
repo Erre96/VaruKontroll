@@ -4,11 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#00BCD4"
     tools:context="com.example.erhan.varukontroll.MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/gradient_style"
         android:orientation="vertical">
 
         <EditText
@@ -37,7 +39,11 @@
             android:id="@+id/proceedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="proceed" />
+            android:background="@drawable/button_design"
+
+            android:onClick="proceed"
+            android:text="@string/signIn"
+            android:textColor="@android:color/background_light" />
 
     </LinearLayout>
 

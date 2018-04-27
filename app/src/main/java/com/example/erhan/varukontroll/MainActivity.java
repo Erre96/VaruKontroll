@@ -20,9 +20,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
+    private static Context mContext;
     private FirebaseAuth mAuth;
-    public User person = new User();
-    public String message;
+    //public User person = new User();
     public static Stock stock = new Stock();
 
 
@@ -31,54 +31,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        stock.initializeData();
-        //StockActivity.uploadStockToFirebase();
-        message = "Sign In";
         mAuth = FirebaseAuth.getInstance();
-        setButtonText();
-    }
-
-    public void setButtonText() {
-        Button button = findViewById(R.id.proceedButton);
-        if (message.equals("Sign In")) {
-            button.setText(getResources().getString(R.string.signIn));
-            Log.d("Anus",message);
-        } else if (message.equals("Create Account")){
-            button.setText(getResources().getString(R.string.createAccount));
-            Log.d("Anus",message);
-        }
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        // updateUI(currentUser);
-    }
-
-    public void createAccount(String email, String password)
-    {
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d("AccountCreation", "createUserWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            //  updateUI(user);
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w("AccountCreation", "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(MainActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                            //  updateUI(null);
-                        }
-
-                        // ...
-                    }
-                });
+        mContext = this;
+        //resetAllData below will only be used to set or restore default values on Firebase. And shall NEVER be used otherwise.
+        stock.initializeData();
+        //stock.resetAllData(0);
     }
 
     public void signIn(String email, String password)
@@ -94,8 +51,8 @@ public class MainActivity extends AppCompatActivity {
                             // updateUI(user);
                             goToStock();
                         } else {
-                            goToStock();
                             // If sign in fails, display a message to the user.
+                            goToStock();
                             Log.w("Log in attempt", "signInWithEmail:failure", task.getException());
                             Toast.makeText(MainActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
@@ -107,26 +64,7 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
-    public void getCurrentUser()
-    {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
-            // Name, email address, and profile photo Url
-            person.setName(user.getDisplayName());
-            person.setEmail(user.getEmail());
-            Uri photoUrl = user.getPhotoUrl();
-
-            // Check if user's email is verified
-            boolean emailVerified = user.isEmailVerified();
-
-            // The user's ID, unique to the Firebase project. Do NOT use this value to
-            // authenticate with your backend server, if you have one. Use
-            // FirebaseUser.getToken() instead.
-            String uid = user.getUid();
-        }
-    }
-
-    public void signIn() {
+     void getEmailAndPassword() {
 
         EditText emailText = findViewById((R.id.email));
         EditText passwordText = findViewById((R.id.password));
@@ -137,31 +75,24 @@ public class MainActivity extends AppCompatActivity {
         signIn(email, password);
     }
 
-    public void createAccount() {
-        EditText emailText = findViewById((R.id.email));
-        EditText passwordText = findViewById((R.id.password));
-
-        String email = emailText.getText().toString();
-        String password = passwordText.getText().toString();
-
-        createAccount(email,password);
-    }
-
     public void proceed(View v)
     {
-        if(message.equals("Sign In"))
-        {
-            signIn();
-        }
-
-        if(message.equals("Create Account"))
-        {
-            createAccount();
-        }
+      getEmailAndPassword();
     }
 
     public void goToStock() {
         Intent intent = new Intent(this, ProductTypeActivity.class);
         startActivity(intent);
+    }
+
+    public static void goToLoginActivity() {
+        Intent login = new Intent(mContext, MainActivity.class);
+        mContext.startActivity(login);
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        return;
     }
 }
